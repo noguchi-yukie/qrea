@@ -1,0 +1,25 @@
+
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title if title else '資料配布管理' }}</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">ホーム</a>
+      <a href="/scan?mode=assign">スキャン(配布)</a>
+      <a href="/scan?mode=return">スキャン(返却)</a>
+      <a href="/list">一覧</a>
+      <a href="/export.csv">CSV出力</a>
+      <a href="/settings">初期設定</a>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>配布登録</h2>
+<p><strong>QR ID:</strong> {{ qr_id }}</p>
+<form method="post">
+  <label>資料タイトル
+    <input name="title" value="{{ doc.title if doc and doc.title else '' }}" />
+  </label>
+
+  {% for field in extra_fields %}
+  <label>{{ field.label }}
+    <input name="{{ field.name }}" value="{{ field.value or '' }}" />
+  </label>
+  {% endfor %}
+
+  <label>配布先(受領者)
+    <input name="recipient" value="{{ doc.recipient if doc and doc.recipient else '' }}" required />
+  </label>
+  <label>配布者
+    <input name="distributed_by" value="{{ doc.distributed_by if doc and doc.distributed_by else '' }}" />
+  </label>
+  <label>配布日時(ISO)
+    <input name="distributed_at" placeholder="空=現在時刻"
+           value="{{ distributed_value }}" />
+  </label>
+  <label>返却期限(YYYY-MM-DD)
+    <input name="due_date" value="{{ due_value }}" />
+  </label>
+  <label>メモ
+    <textarea name="notes">{{ doc.notes if doc and doc.notes else '' }}</textarea>
+  </label>
+  <button class="btn" type="submit">登録</button>
+</form>
+{% endblock %}

@@ -1,0 +1,39 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<section class="panel">
+  <div class="panel-header">
+    <div>
+      <p class="eyebrow">QRスキャナー</p>
+      <h2>{{ '配布登録' if mode == 'assign' else '返却登録' }}</h2>
+      <p class="muted small">カメラへのアクセス許可後、QRコードを枠内に収めてください。</p>
+    </div>
+    <a class="btn" href="/scan?mode={{ 'return' if mode == 'assign' else 'assign' }}">
+      {{ '返却モードへ' if mode == 'assign' else '配布モードへ' }}
+    </a>
+  </div>
+
+  <div class="scanner-shell">
+    <video id="scan-video" playsinline muted></video>
+    <div class="scan-actions">
+      <button id="scan-start" class="btn primary">カメラを起動</button>
+      <button id="scan-stop" class="btn" disabled>停止</button>
+      <label class="btn file-btn">
+        画像から読み取る
+        <input type="file" id="scan-file" accept="image/*" capture="environment" />
+      </label>
+    </div>
+    <p id="scan-status" class="muted small">待機中…</p>
+  </div>
+
+  <ol class="steps">
+    <li>「カメラを起動」を押すと利用中のブラウザーが権限を求めます。</li>
+    <li>許可後、QRコードをゆっくりかざすと自動で {{ '配布' if mode == 'assign' else '返却' }}フォームに遷移します。</li>
+    <li>暗所やピントが合いづらい場合は端末を明るくしてください。</li>
+  </ol>
+</section>
+
+<script src="https://unpkg.com/@zxing/library@0.21.2"></script>
+<script defer id="scan-script" data-mode="{{ mode }}" src="{{ url_for('static', path='scan.js') }}"></script>
+{% endblock %}

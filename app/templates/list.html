@@ -1,0 +1,58 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>資料一覧</h2>
+<div class="filters">
+  <form method="get">
+    <input type="text" name="q" value="{{ q }}" placeholder="検索(タイトル/配布先/QR)" />
+    <select name="status">
+      <option value="">(全て)</option>
+      <option value="new" {{ 'selected' if status=='new' else '' }}>未登録</option>
+      <option value="assigned" {{ 'selected' if status=='assigned' else '' }}>配布中</option>
+      <option value="returned" {{ 'selected' if status=='returned' else '' }}>返却済</option>
+    </select>
+    <button class="btn" type="submit">絞り込み</button>
+  </form>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>QR ID</th>
+      <th>タイトル</th>
+      {% for field in extra_fields %}
+      <th>{{ field.label }}</th>
+      {% endfor %}
+      <th>配布先</th>
+      <th>配布日時</th>
+      <th>返却日時</th>
+      <th>状態</th>
+    </tr>
+  </thead>
+  <tbody id="rows">
+    {% for d in docs %}
+    <tr data-q="{{ (d.title or '') + ' ' + (d.recipient or '') + ' ' + d.qr_id }}">
+      <td><a href="/detail/{{ d.qr_id }}">{{ d.qr_id }}</a></td>
+      <td>{{ d.title or '' }}</td>
+      {% for field in extra_fields %}
+      <td>{{ (d|attr(field.attr)) or '' }}</td>
+      {% endfor %}
+      <td>{{ d.recipient or '' }}</td>
+      <td>{{ d.distributed_at|dtsec }}</td>
+      <td>{{ d.returned_at|dtsec }}</td>
+      <td>{{ d.status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<script>
+  // lightweight client-side filter for q
+  (function(){
+    const q = "{{ q }}".toLowerCase();
+    if(!q) return;
+    for(const tr of document.querySelectorAll('#rows tr')){
+      const t = tr.getAttribute('data-q').toLowerCase();
+      tr.style.display = t.includes(q) ? '' : 'none';
+    }
+  })();
+</script>
+{% endblock %}

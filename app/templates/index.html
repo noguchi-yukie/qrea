@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>資料配布管理</h1>
+<p>印刷物のQRを読み取って配布・返却を記録します。</p>
+<div class="grid">
+  <a class="btn" href="/scan?mode=assign">配布登録をはじめる</a>
+  <a class="btn" href="/scan?mode=return">返却登録をはじめる</a>
+  <a class="btn" href="/list">一覧を見る</a>
+</div>
+{% endblock %}

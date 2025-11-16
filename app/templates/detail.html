@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>詳細</h2>
+<dl class="detail">
+  <dt>QR ID</dt><dd>{{ doc.qr_id }}</dd>
+  <dt>タイトル</dt><dd>{{ doc.title or '' }}</dd>
+  {% for field in extra_fields %}
+  <dt>{{ field.label }}</dt><dd>{{ field.value or '' }}</dd>
+  {% endfor %}
+  <dt>配布先</dt><dd>{{ doc.recipient or '' }}</dd>
+  <dt>配布者</dt><dd>{{ doc.distributed_by or '' }}</dd>
+  <dt>配布日時</dt><dd>{{ doc.distributed_at|dtsec }}</dd>
+  <dt>返却者</dt><dd>{{ doc.returned_by or '' }}</dd>
+  <dt>返却日時</dt><dd>{{ doc.returned_at|dtsec }}</dd>
+  <dt>返却期限</dt><dd>{{ doc.due_date or '' }}</dd>
+  <dt>状態</dt><dd>{{ doc.status }}</dd>
+  <dt>メモ</dt><dd><pre>{{ doc.notes or '' }}</pre></dd>
+</dl>
+<div class="grid">
+  <a class="btn" href="/scan?mode=assign">別の配布登録</a>
+  <a class="btn" href="/scan?mode=return">別の返却登録</a>
+  <a class="btn" href="/list">一覧へ</a>
+</div>
+{% endblock %}

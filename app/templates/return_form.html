@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>返却登録</h2>
+<p><strong>QR ID:</strong> {{ qr_id }}</p>
+{% if doc and doc.recipient %}
+<p>配布先: {{ doc.recipient }} / 状態: {{ doc.status }}</p>
+{% endif %}
+<form method="post">
+  <label>返却者(任意) <input name="returned_by" /></label>
+  <label>返却日時(ISO) <input name="returned_at" placeholder="空=現在時刻" /></label>
+  <label>メモ追記 <textarea name="notes"></textarea></label>
+  <button class="btn" type="submit">返却を記録</button>
+</form>
+{% endblock %}
