@@ -1,4 +1,4 @@
-# qr-linker-app
+# Quick Registration & Return Archive-app
 
 FastAPI 製の QR コード紐付けアプリ。既存の QR シールと資料配布/返却の履歴を 1:1 で追跡し、在庫や回収状況を即座に把握できます。スマホ/PC ブラウザからアクセスして QR スキャン・配布登録・返却登録・一覧/CSV 出力まで完結します。
 
